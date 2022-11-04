@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getMe } from "../../features/authSlice";
+
 const DashboardMhs = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -39,9 +40,9 @@ const DashboardMhs = () => {
 
   const getSem = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/count/mhs`);
+      const response = await fetch(`http://localhost:5000/irs/${user && user.nim}`);
       let json = await response.json();
-      setSem(json.msg);
+      setSem(Object.keys(json).length);
     } catch (error) {
       setSem("");
     }
@@ -75,7 +76,9 @@ const DashboardMhs = () => {
       <h3>Dashboard</h3>
       <div className="flex my-4">
         <div className="dash-foto">
-          <div className="shadow-md w-52 h-60 mr-8 bg-slate-100 border border-slate-100"></div>
+          <div className="shadow-md w-48 h-64 mr-8 bg-slate-100 border border-slate-100 grid place-items-center">
+            <img src = {user && user.url} alt="Foto profil" className="w-11/12"/>
+          </div>
         </div>
 
         <div className="dash-profile">

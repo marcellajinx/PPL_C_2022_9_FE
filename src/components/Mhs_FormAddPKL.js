@@ -61,9 +61,12 @@ const FormAddPKL = () => {
     <div className="min-h-[70vh] mb-16 p-12 pb-16 relative bg-white flex-initial w-10/12">
       <h3 className="text-3xl font-bold">Praktek Kerja Lapangan</h3>
       <div className="mb-12 flex mt-6">
-        <div className="dash-foto">
-          <div className="shadow-md w-52 h-60 mr-8 bg-slate-100 border border-slate-100"></div>
+       <div className="dash-foto">
+          <div className="shadow-md w-48 h-64 mr-8 bg-slate-100 border border-slate-100 grid place-items-center">
+            <img src = {user && user.url} alt="Foto profil" className="w-11/12"/>
+          </div>
         </div>
+
 
         <div className="flex-initial w-2/3 ">
           <form onSubmit={createPKL} className="flex justify-between">

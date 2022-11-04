@@ -201,7 +201,7 @@ const ProfileAdm = () => {
                     <div className="p-3 inline-flex justify-center w-52 h-60">
                       <img
                         className="max-w-full h-auto"
-                        src="https://iili.io/bJfHv9.jpg"
+                        src="https://iili.io/mhAn1t.webp"
                       />
                     </div>
                   </div>

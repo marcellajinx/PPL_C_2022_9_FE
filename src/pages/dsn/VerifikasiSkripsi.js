@@ -72,7 +72,7 @@ const VerifikasiSkripsi = () => {
   return (
     <Layout>
       <div className="mb-16 p-16 pb-16 relative bg-white flex-initial w-10/12">
-        <div className="mb-4 p-5 pb-1 relative bg-white flex-initial">
+        <div className="mb-4 pb-1 relative bg-white flex-initial">
           <div className="flow-root">
             <h3 className="text-lg font-normal float-left flex my-1">
               Verifikasi Data Mahasiswa Informatika <br />
@@ -123,56 +123,56 @@ const VerifikasiSkripsi = () => {
 
         <div className="flex flex-col px-5">
           <div className="overflow-x-auto sm:-mx-4 lg:-mx-8">
-            <div className="inline-block min-w-full sm:px-6 lg:px-8">
+            <div className="inline-block min-w-full">
               <div className="overflow-hidden">
-                <table className="min-w-full text-center">
+                <table className="mx-2 table-auto min-w-full text-center">
                   <thead className="border-b bg-gray-300">
                     <tr>
                       <th
                         scope="col"
-                        className="text-sm font-medium text-grey px-6 py-4 border-r border-l"
+                        className="text-sm font-medium text-grey py-4 border-r border-l"
                       >
                         No
                       </th>
                       <th
                         scope="col"
-                        className="text-sm font-medium text-grey px-6 py-4 border-r"
+                        className="text-sm font-medium text-grey py-4 border-r"
                       >
                         NIM
                       </th>
                       <th
                         scope="col"
-                        className="text-sm font-medium text-grey px-6 py-4 border-r"
+                        className="text-sm font-medium text-grey py-4 border-r"
                       >
                         Nama
                       </th>
                       <th
                         scope="col"
-                        className="text-sm font-medium text-grey px-6 py-4 border-r"
+                        className="text-sm font-medium text-grey py-4 border-r"
                       >
                         Angkatan
                       </th>
                       <th
                         scope="col"
-                        className="text-sm font-medium text-grey px-6 py-4 border-r"
+                        className="text-sm font-medium text-grey py-4 border-r"
                       >
                         Lama Studi
                       </th>
                       <th
                         scope="col"
-                        className="text-sm font-medium text-grey px-6 py-4 border-r"
+                        className="text-sm font-medium text-grey py-4 border-r"
                       >
                         Nilai Skripsi
                       </th>
                       <th
                         scope="col"
-                        className="text-sm font-medium text-grey px-6 py-4 border-r"
+                        className="text-sm font-medium text-grey py-4 border-r"
                       >
                         Aksi
                       </th>
                       <th
                         scope="col"
-                        className="text-sm font-medium text-grey px-6 py-4 border-r"
+                        className="text-sm font-medium text-grey py-4 border-r"
                       >
                         Status
                       </th>
@@ -197,32 +197,31 @@ const VerifikasiSkripsi = () => {
                       skripsi.map((el, idx) => {
                         return (
                           <tr className="bg-white border-b">
-                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r border-l">
+                            <td className="py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r border-l">
                               {idx + 1}
                             </td>
-                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">
+                            <td className="text-sm text-gray-900 font-light py-4 whitespace-nowrap border-r">
                               {el.nim}
                             </td>
-                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">
+                            <td className="text-sm text-gray-900 font-light py-4 whitespace-nowrap border-r">
                               {el.tb_mh.nama}
                             </td>
-                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">
+                            <td className="text-sm text-gray-900 font-light py-4 whitespace-nowrap border-r">
                               {el.tb_mh.angkatan}
                             </td>
-                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">
+                            <td className="text-sm text-gray-900 font-light py-4 whitespace-nowrap border-r">
                               {el.lama_studi}
                             </td>
-                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">
+                            <td className="text-sm text-gray-900 font-light py-4 whitespace-nowrap border-r">
                               {el.nilai_skripsi}
                             </td>
-                            <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">
+                            <td className="text-sm text-gray-900 font-light py-4 whitespace-nowrap border-r">
                               <div className="flex justify-between">
                                 <a>
                                   <img
                                     className="h-6 py-1 align-center"
                                     src={view}
                                   />
-                                  <div>view</div>
                                 </a>
 
                                 <a>
@@ -230,7 +229,6 @@ const VerifikasiSkripsi = () => {
                                     className="h-6 align-center"
                                     src={pencil}
                                   />
-                                  <div>edit</div>
                                 </a>
 
                                 <a>
@@ -248,11 +246,10 @@ const VerifikasiSkripsi = () => {
                                       src={checklist}
                                     />
                                   </div>
-                                  <div>verifikasi</div>
                                 </a>
                               </div>
                             </td>
-                            <td className="text-sm text-green-900 font-light px-6 py-4 whitespace-nowrap border-r">
+                            <td className="text-sm text-green-900 font-light py-4 whitespace-nowrap border-r">
                               {el.status_verifikasi === "1"
                                 ? "VERIFIED"
                                 : "NOT VERIFIED"}

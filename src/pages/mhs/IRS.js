@@ -3,7 +3,7 @@ import FormAddIRS from "../../components/Mhs_FormAddIRS";
 import { getMe } from "../../features/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 
 const IRS = () => {
   const dispatch = useDispatch();

@@ -1,3 +1,5 @@
+import React from "react";
+
 const ResultDsn = ({ dosen }) => {
   return (
     <div class="overflow-hidden">

@@ -3,7 +3,7 @@ import FormAddPKL from "../../components/Mhs_FormAddPKL";
 import { getMe } from "../../features/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 
 const PKL = () => {
   const dispatch = useDispatch();

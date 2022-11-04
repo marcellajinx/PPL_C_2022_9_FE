@@ -16,6 +16,10 @@ const DashboardDsn = () => {
   const [angkatan, setAngkatan] = useState("2016");
   const [dataPerwalian, setDataPerwalian] = useState([]);
 
+  
+  const [file, setFile] = useState("")
+  const [preview, setPreview] = useState("")
+
   useEffect(() => {
     dispatch(getMe());
   }, [dispatch]);
@@ -42,12 +46,21 @@ const DashboardDsn = () => {
       setEmail(response.data.email);
       setKontak(response.data.no_hp);
       setNIP(response.data.nip);
+
+      setFile(response.data.image)
+        setPreview(response.data.url)
     } catch (error) {
       console.log(error);
       if (error.response) {
         setMsg(error.response.data.msg);
       }
     }
+  };
+
+  const loadImage = (e) => {
+    const image = e.target.files[0];
+    setFile(image);
+    setPreview(URL.createObjectURL(image));
   };
 
   useEffect(() => {
@@ -75,13 +88,14 @@ const DashboardDsn = () => {
 
   const updateDataDsn = async (e) => {
     e.preventDefault();
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("nama", nama);
+    formData.append("email", email);
+    formData.append("kontak", kontak);
+    formData.append("nip", nip);
     try {
-      await axios.patch(`http://localhost:5000/dosen/${nip}`, {
-        nama: nama,
-        email: email,
-        kontak: kontak,
-        nip: nip,
-      });
+      await axios.patch(`http://localhost:5000/dosen/${nip}`, formData);
       location.reload();
       // navigate("/dashboard");
     } catch (error) {
@@ -185,7 +199,18 @@ const DashboardDsn = () => {
                 </div>
               </div>
               <div className="w-3/5 mx-auto">
-                <div className="shadow-md w-full h-64"></div>
+                <div className="grid place-items-center shadow-md w-48 h-56 m-8">
+                {preview ? (
+                <img src={preview} alt="Foto Mahasiswa" className="w-10/12"/>
+                ) :("")}
+              </div>
+              <div className="ml-8 bg-transparent py-2  rounded">
+                <input
+                    type="file"
+                    className="file-input"
+                    onChange={loadImage}
+                  />
+              </div>
               </div>
             </div>
           </form>

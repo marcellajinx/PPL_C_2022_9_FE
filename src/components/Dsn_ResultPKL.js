@@ -1,3 +1,4 @@
+import React from "react";
 const ResultPKL = ({ mahasiswa }) => {
   return (
     <div class="overflow-hidden">

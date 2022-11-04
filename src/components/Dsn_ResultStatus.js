@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-
+import React from "react";
 const ResultStatus = ({ mahasiswa }) => {
   return (
     <div class="overflow-hidden">
@@ -8,31 +8,31 @@ const ResultStatus = ({ mahasiswa }) => {
           <tr>
             <th
               scope="col"
-              class="text-sm font-medium text-grey px-6 py-4 border-r border-l"
+              class="text-sm font-medium text-grey py-4 border-r border-l"
             >
               No
             </th>
             <th
               scope="col"
-              class="text-sm font-medium text-grey px-6 py-4 border-r"
+              class="text-sm font-medium text-grey py-4 border-r"
             >
               Nama
             </th>
             <th
               scope="col"
-              class="text-sm font-medium text-grey px-6 py-4 border-r"
+              class="text-sm font-medium text-grey py-4 border-r"
             >
               NIM
             </th>
             <th
               scope="col"
-              class="text-sm font-medium text-grey px-6 py-4 border-r"
+              class="text-sm font-medium text-grey py-4 border-r"
             >
               Angkatan
             </th>
             <th
               scope="col"
-              class="text-sm font-medium text-grey px-6 py-4 border-r"
+              class="text-sm font-medium text-grey py-4 border-r"
             >
               Status
             </th>
@@ -52,19 +52,19 @@ const ResultStatus = ({ mahasiswa }) => {
             mahasiswa.map((mhs, idx) => {
               return (
                 <tr class="bg-white border-b">
-                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r border-l">
+                  <td class="py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r border-l">
                     {idx + 1}
                   </td>
-                  <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">
+                  <td class="text-sm text-gray-900 font-light py-4 whitespace-nowrap border-r">
                     <Link to={`/dosen/detail-mhs/${mhs.nim}`}>{mhs.nama}</Link>
                   </td>
-                  <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">
+                  <td class="text-sm text-gray-900 font-light py-4 whitespace-nowrap border-r">
                     {mhs.nim}
                   </td>
-                  <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">
+                  <td class="text-sm text-gray-900 font-light py-4 whitespace-nowrap border-r">
                     {mhs.angkatan}
                   </td>
-                  <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">
+                  <td class="text-sm text-gray-900 font-light py-4 whitespace-nowrap border-r">
                     {mhs.status_mhs == "1" ? "AKTIF" : "NON-AKTIF"}
                   </td>
                 </tr>

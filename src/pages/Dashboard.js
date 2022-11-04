@@ -59,20 +59,6 @@ const Dashboard = () => {
       }
     }
   }
-
-  // if (user.roles === "1") {
-  //   return (
-  //     <Layout>
-  //       <DashboardMhs />
-  //     </Layout>
-  //   );
-  // } else if (user.roles === "3") {
-  //   return (
-  //     <Layout>
-  //       <DashboardAdm />
-  //     </Layout>
-  //   );
-  // }
 };
 
 export default Dashboard;

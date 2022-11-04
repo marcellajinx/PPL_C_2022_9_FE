@@ -25,6 +25,9 @@ const FormUpdateDataMhs = () => {
   const [provinsi, setProvinsi] = useState("");
   const [kelurahan, setKelurahan] = useState("");
 
+  const [file, setFile] = useState("")
+  const [preview, setPreview] = useState("")
+
   const [provinces, setProvinces] = useState([]);
   const [regencies, setRegencies] = useState([]);
   const [districts, setDistricts] = useState([]);
@@ -162,6 +165,9 @@ const FormUpdateDataMhs = () => {
         setKelurahan(response.data.kelurahan);
         setKecamatan(response.data.kecamatan);
         setKodePos(response.data.kodepos);
+
+        setFile(response.data.image)
+        setPreview(response.data.url)
       } catch (error) {
         if (error.response) {
           setMsg(error.response.data.msg);
@@ -171,30 +177,69 @@ const FormUpdateDataMhs = () => {
     getMhsByNIM();
   }, []);
 
+  const loadImage = (e) => {
+    const image = e.target.files[0];
+    setFile(image);
+    setPreview(URL.createObjectURL(image));
+  };
+
   const updateDataMhs = async (e) => {
     e.preventDefault();
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("nama", nama);
+    formData.append("angkatan", angkatan);
+    formData.append("email", email);
+    formData.append("tempat_lahir", tempat_lahir);
+    formData.append("kontak", kontak);
+    formData.append("nim", nim);
+    formData.append("status", status);
+    formData.append("jalur_masuk", jalur_masuk);
+    formData.append("doswal", doswal);
+    formData.append("tgl_lahir", tgl_lahir);
+    formData.append("alamat", alamat);
+    formData.append("kota", kota);
+    formData.append("kecamatan", kecamatan);
+    formData.append("kelurahan", kelurahan);
+    formData.append("kodepos", kodepos);
+    formData.append("provinsi", provinsi);
+    
+    
     try {
-      await axios.patch(`http://localhost:5000/mahasiswa/${nim}`, {
-        nama: nama,
-        angkatan: angkatan,
-        email: email,
-        tempat_lahir: tempat_lahir,
-        kontak: kontak,
-        nim: nim,
-        status: status,
-        jalur_masuk: jalur_masuk,
-        doswal: doswal,
-        tgl_lahir: tgl_lahir,
-        alamat: alamat,
-        provinsi: provinsi,
-        kota: kota,
-        kecamatan: kecamatan,
-        kelurahan: kelurahan,
-        kodepos: kodepos,
-      });
+      //   let userData = {}; // creates a user json
+      // formData.forEach(function(value, key){
+      //     userData[key] = value;  // populates user json with form data
+      // });
+      console.log(file)
+      await axios.patch(`http://localhost:5000/mahasiswa/${nim}`
+      , formData
+      // , {
+        // headers: {
+        //   "Content-type": "application/x-www-form-urlencoded",
+        // },
+        // nama: nama,
+        // angkatan: angkatan,
+        // email: email,
+        // tempat_lahir: tempat_lahir,
+        // kontak: kontak,
+        // nim: nim,
+        // status: status,
+        // jalur_masuk: jalur_masuk,
+        // doswal: doswal,
+        // tgl_lahir: tgl_lahir,
+        // alamat: alamat,
+        // provinsi: provinsi,
+        // kota: kota,
+        // kecamatan: kecamatan,
+        // kelurahan: kelurahan,
+        // kodepos: kodepos,
+        // image: file,
+        // url: preview
+      // }
+      );
       navigate("/dashboard");
     } catch (error) {
-      if (error.response) {
+          if (error.response) {
         setMsg(error.response.data.msg);
       }
     }
@@ -443,10 +488,18 @@ const FormUpdateDataMhs = () => {
             </div>
 
             <div className="w-3/5 mx-auto">
-              <div className="shadow-md w-full h-1/2 m-8"></div>
-              <button className="px-6 ml-24 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 border border-blue-500 hover:border-transparent rounded">
-                Ganti Foto
-              </button>
+              <div className="grid place-items-center shadow-md w-48 h-64 m-8">
+                {preview ? (
+                <img src={preview} alt="Foto Mahasiswa" className="w-10/12"/>
+                ) : ("")}
+              </div>
+              <div className="ml-8 bg-transparent py-2  rounded">
+                <input
+                    type="file"
+                    className="file-input"
+                    onChange={loadImage}
+                  />
+              </div>
             </div>
           </div>
 

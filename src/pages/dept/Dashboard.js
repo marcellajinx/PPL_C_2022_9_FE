@@ -1,5 +1,3 @@
-import chart2 from "../../../public/images/chart2.png";
-import chart3 from "../../../public/images/chart3.png";
 import BarChartStatus from "../../components/Chart_BarStatus";
 
 import React, { useEffect, useState } from "react";
