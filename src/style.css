@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: "Roboto", sans-serif;
+  }
+  td {
+    padding: 0 0.75rem;
+  }
+  button:focus {
+    outline: none;
+  }
+  canvas {
+    height: fit-content;
+    width: fit-content;
+  }
+  /* select {
+    border: none;
+  } */
+}

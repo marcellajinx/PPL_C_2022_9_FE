@@ -1,0 +1,39 @@
+{
+    "extends": [
+        "eslint:recommended",
+        "plugin:import/errors",
+        "plugin:react/recommended",
+        // if using jsx
+        "plugin:jsx-a11y/recommended",
+        // if using hooks
+        "plugin:react-hooks/recommended",
+        "prettier",
+        "prettier/react"
+    ],
+    "rules": {
+        "react/prop-types": 0,
+        "react/react-in-jsx-scope": 0
+    },
+    "plugins": [
+        "react",
+        "import",
+        "jsx-a11y"
+    ],
+    "parserOptions": {
+        "ecmaVersion": 2021,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true
+        }
+    },
+    "env": {
+        "es6": true,
+        "browser": true,
+        "node": true
+    },
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
+    }
+}
