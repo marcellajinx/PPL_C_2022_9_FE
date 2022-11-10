@@ -251,7 +251,7 @@ const DashboardDept = () => {
         <div className="bg-white rounded-md border border-slate-100 shadow-xl">
           <div className="flex items-center justify-between p-4 border-b dark:border-primary">
             <h4 className="text-lg font-semibold text-gray-500 dark:text-light px-4">
-              Status Verfikasi KHS
+              Status Verfikasi <br/>KHS
             </h4>
             <div className="flex items-center space-x-2"></div>
           </div>
@@ -267,7 +267,7 @@ const DashboardDept = () => {
         <div className="bg-white rounded-md border border-slate-100 shadow-xl">
           <div className="flex items-center justify-between p-4 border-b dark:border-primary">
             <h4 className="text-lg font-semibold text-gray-500 dark:text-light px-4">
-              Status Verifikasi PKL
+              Status Verifikasi <br/>PKL
             </h4>
             <div className="flex items-center space-x-2"></div>
           </div>

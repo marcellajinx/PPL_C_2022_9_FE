@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
+
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getMe } from "../../features/authSlice";
@@ -8,7 +11,9 @@ import pencil from "../../../public/images/pencil.png";
 import view from "../../../public/images/view.png";
 import checklist from "../../../public/images/checklist.png";
 import Layout from "../Layout";
+import Pagination from "../../components/Pagination";
 import axios from "axios";
+import printJS from "print-js";
 
 const VerifikasiKHS = () => {
   const dispatch = useDispatch();
@@ -18,8 +23,60 @@ const VerifikasiKHS = () => {
   const [msg, setMsg] = useState("");
 
   const [khs, setKHS] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [dataPerPage] = useState(15);
   const [keyword, setKeyword] = useState("");
   const [status, setStatus] = useState("");
+
+  // for modal
+  const [show, setShow] = useState();
+  const [semShow, setSemShow] = useState("");
+  const [sksShow, setSKSShow] = useState("");
+  const [skskShow, setskskShow] = useState("");
+  const [ipsShow, setIPSShow] = useState("");
+  const [ipkShow, setIPKShow] = useState("");
+  const [nimShow, setNIMShow] = useState("");
+  const handleClose = () => setShow(false);
+  const handleShow = function (el) {
+    setShow(true);
+    setSemShow(el.smt_khs);
+    setSKSShow(el.jml_sks);
+    setNIMShow(el.nim);
+    setIPSShow(el.ips);
+    setIPKShow(el.ipk);
+    setskskShow(el.jml_sksk);
+    // setFileShow(el.fire_khs);
+  };
+  const handleSubmit = function (nim) {
+    updateKHS(nim);
+    setShow(false);
+  };
+
+  // for updating file
+  const [file, setFile] = useState("");
+  // const [fileShow, setFileShow] = useState("");
+  const loadFile = (e) => {
+    const file_khs = e.target.files[0];
+    setFile(file_khs);
+  };
+
+  const updateKHS = async (nim) => {
+    // e.preventDefault();
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("smt_khs", semShow);
+    formData.append("jml_sks", sksShow);
+    formData.append("jml_sksk", skskShow);
+    formData.append("ips", ipsShow);
+    formData.append("ipk", ipkShow);
+    try {
+      await axios.patch(`http://localhost:5000/khs/${nim}`, formData);
+      btnEdit === true ? setBtnEdit(false) : setBtnEdit(true); // trigger change
+      // location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     dispatch(getMe());
@@ -35,9 +92,11 @@ const VerifikasiKHS = () => {
     }
   }, [isError, user, navigate]);
 
+  const [btnVerif, setBtnVerif] = useState(false);
+  const [btnEdit, setBtnEdit] = useState(false);
   useEffect(() => {
     filterVerifKHS();
-  }, [user, status, keyword]);
+  }, [user, status, keyword, btnVerif, btnEdit]);
 
   async function filterVerifKHS() {
     try {
@@ -52,6 +111,13 @@ const VerifikasiKHS = () => {
     }
   }
 
+  // Get current posts
+  const indexOfLastData = currentPage * dataPerPage;
+  const indexOfFirstData = indexOfLastData - dataPerPage;
+  const currentData = khs.slice(indexOfFirstData, indexOfLastData);
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   const clickBtnVerif = async (e, el) => {
     e.preventDefault();
     try {
@@ -59,7 +125,7 @@ const VerifikasiKHS = () => {
         nim: el.nim,
         smt_khs: el.smt_khs,
       });
-      el.status_verifikasi = "1"; // trigger change
+      btnVerif === true ? setBtnVerif(false) : setBtnVerif(true); // trigger change
       // location.reload();
     } catch (error) {
       console.log(error);
@@ -69,9 +135,153 @@ const VerifikasiKHS = () => {
     }
   };
 
+  // const li_angkatan = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
   return (
     <Layout>
       <div className="mb-16 p-16 pb-16 relative bg-white flex-initial w-10/12">
+        <Modal
+          show={show}
+          onHide={handleClose}
+          className="rounded-xl fade w-1/3 top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 p-8 m-0 fixed modal show bg-slate-100"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title className="font-bold text-2xl modal-title h4">
+              Kartu Hasil Studi
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <form>
+              {/* <div className="form-group flex flex-col my-4">
+                <label
+                  htmlFor="smt_khs"
+                  className="form-label inline-block mb-2 text-gray-700"
+                >
+                  Semester
+                </label>
+                <select
+                  required
+                  value={semShow}
+                  onChange={(e) => setSemShow(e.target.value)}
+                  onBlur={(e) => setSemShow(e.target.value)}
+                  name="smt_khs"
+                  id="smt_khs"
+                  className="p-1.5 htmlForm-control border border-solid border-gray-300 rounded focus:border-gray-500 focus:outline-none"
+                >
+                  <option>--Pilih Semester--</option>
+                  {li_angkatan.map((opt) => (
+                    <option
+                      value={opt}
+                      selected={opt == semShow ? true : false}
+                    >
+                      {opt}
+                    </option>
+                  ))}
+                </select>
+              </div> */}
+              <div className="form-group flex flex-col my-4">
+                <label
+                  htmlFor="jml_sks"
+                  className="form-label inline-block mb-2 text-gray-700"
+                >
+                  Jumlah SKS
+                </label>
+                <input
+                  required
+                  value={sksShow}
+                  onChange={(e) => setSKSShow(e.target.value)}
+                  type="number"
+                  name="jml_sks"
+                  id="jml_sks"
+                  className="p-1.5 htmlForm-control border border-solid border-gray-300 rounded focus:border-gray-500 focus:outline-none"
+                />
+              </div>
+              <div className="form-group flex flex-col my-4">
+                <label
+                  htmlFor="jml_sksk"
+                  className="form-label inline-block mb-2 text-gray-700"
+                >
+                  Jumlah SKS Kumulatif
+                </label>
+                <input
+                  required
+                  value={skskShow}
+                  onChange={(e) => setskskShow(e.target.value)}
+                  type="number"
+                  name="jml_sksk"
+                  id="jml_sksk"
+                  className="p-1.5 htmlForm-control border border-solid border-gray-300 rounded focus:border-gray-500 focus:outline-none"
+                />
+              </div>
+              <div className="form-group flex flex-col my-4">
+                <label
+                  htmlFor="ips"
+                  className="form-label inline-block mb-2 text-gray-700"
+                >
+                  Indeks Prestasi
+                </label>
+                <input
+                  required
+                  value={ipsShow}
+                  onChange={(e) => setIPSShow(e.target.value)}
+                  type="number"
+                  name="ips"
+                  id="ips"
+                  step="0.01"
+                  className="p-1.5 htmlForm-control border border-solid border-gray-300 rounded focus:border-gray-500 focus:outline-none"
+                />
+              </div>
+              <div className="form-group flex flex-col my-4">
+                <label
+                  htmlFor="ipk"
+                  className="form-label inline-block mb-2 text-gray-700"
+                >
+                  Indeks Prestasi Kumulatif
+                </label>
+                <input
+                  required
+                  value={ipkShow}
+                  onChange={(e) => setIPKShow(e.target.value)}
+                  type="number"
+                  name="ipk"
+                  id="ipk"
+                  step="0.01"
+                  className="p-1.5 htmlForm-control border border-solid border-gray-300 rounded focus:border-gray-500 focus:outline-none"
+                />
+              </div>
+              <div className="form-group flex flex-col my-4">
+                <label
+                  htmlFor="file_khs"
+                  className="form-label inline-block mb-2 text-gray-700"
+                >
+                  File KHS
+                </label>
+                <input
+                  required
+                  onChange={loadFile}
+                  type="file"
+                  name="file_khs"
+                  id="file_khs"
+                  className="p-1.5 htmlForm-control border border-solid border-gray-300 rounded focus:border-gray-500 focus:outline-none"
+                />
+              </div>
+            </form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              onClick={handleClose}
+              className="mr-5 rounded-md py-2 px-5 bg-slate-800 text-white"
+            >
+              Close
+            </Button>
+            <Button
+              onClick={(e) => handleSubmit(nimShow)}
+              className="text-white rounded-md py-2 px-5 bg-green-500"
+            >
+              Save Changes
+            </Button>
+          </Modal.Footer>
+        </Modal>
         <div className="mb-4 pb-1 relative bg-white flex-initial">
           <div className="flow-root">
             <h3 className="text-lg font-normal float-left flex my-1">
@@ -185,7 +395,7 @@ const VerifikasiKHS = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {!khs.length ? (
+                    {!currentData.length ? (
                       <tr>
                         <td></td>
                         <td></td>
@@ -227,14 +437,17 @@ const VerifikasiKHS = () => {
                             </td>
                             <td className="text-sm text-gray-900 font-light py-4 whitespace-nowrap border-r">
                               <div className="flex justify-between">
-                                <a>
+                                <button
+                                  type="button"
+                                  onClick={() => printJS(el.url)}
+                                >
                                   <img
                                     className="h-6 py-1 align-center"
                                     src={view}
                                   />
-                                </a>
+                                </button>
 
-                                <a>
+                                <a onClick={() => handleShow(el)}>
                                   <img
                                     className="h-6 align-center"
                                     src={pencil}
@@ -302,6 +515,12 @@ const VerifikasiKHS = () => {
               </div>
             </div>
           </div>
+          <Pagination
+            dataPerPage={dataPerPage}
+            totalData={khs.length}
+            paginate={paginate}
+            currentPage={currentPage}
+          />
         </div>
       </div>
     </Layout>

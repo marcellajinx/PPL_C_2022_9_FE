@@ -3,7 +3,7 @@ import React from "react";
 const ResultMhs = ({ mahasiswa }) => {
   return (
     <div class="overflow-hidden">
-      <table class="table-auto text-center">
+      <table class="table-auto w-full text-center">
         <thead class="border-b bg-gray-300">
           <tr>
             <th

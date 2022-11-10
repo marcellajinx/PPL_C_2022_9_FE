@@ -16,7 +16,13 @@
     height: fit-content;
     width: fit-content;
   }
+  a {
+    cursor: pointer;
+  }
   /* select {
     border: none;
   } */
+  input[type="file"] {
+    height: 40px;
+  }
 }

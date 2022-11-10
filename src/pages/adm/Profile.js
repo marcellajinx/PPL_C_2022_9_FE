@@ -197,7 +197,7 @@ const ProfileAdm = () => {
               <div className="bg-white rounded-lg p-8 text-center">
                 <h1 className="font-bold">Informasi Akun</h1>
                 <div className="dash-foto px-12 py-4">
-                  <div className="shadow-md bg-red-600 bg-slate-100 border border-slate-100">
+                  <div className="shadow-md bg-grey-600 bg-slate-100 border border-slate-100">
                     <div className="p-3 inline-flex justify-center w-52 h-60">
                       <img
                         className="max-w-full h-auto"

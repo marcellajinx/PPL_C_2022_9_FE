@@ -2,7 +2,6 @@ import ListKHS from "./Mhs_ListKHS";
 
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const FormAddKHS = () => {
@@ -12,29 +11,33 @@ const FormAddKHS = () => {
   const [jml_sksk, setJml_sksk] = useState("");
   const [ips, setIPS] = useState("");
   const [ipk, setIPK] = useState("");
-  const [file_khs, setFile_khs] = useState("");
 
   const [msg, setMsg] = useState("");
-  const navigate = useNavigate();
 
   let nim;
   if (user && user.nim) {
     nim = user.nim;
   }
 
+  // for uploading file
+  const [file, setFile] = useState("");
+  const loadFile = (e) => {
+    const file_khs = e.target.files[0];
+    setFile(file_khs);
+  };
   const createKHS = async (e) => {
     e.preventDefault();
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("nim", user && user.nim);
+    formData.append("smt_khs", smt_khs);
+    formData.append("status_khs", "0");
+    formData.append("jml_sks", jml_sks);
+    formData.append("jml_sksk", jml_sksk);
+    formData.append("ips", ips);
+    formData.append("ipk", ipk);
     try {
-      await axios.post("http://localhost:5000/khs", {
-        nim: nim,
-        smt_khs: smt_khs,
-        status_khs: "0",
-        jml_sks: jml_sks,
-        jml_sksk: jml_sksk,
-        ips: ips,
-        ipk: ipk,
-        file_khs: file_khs,
-      });
+      await axios.post("http://localhost:5000/khs", formData);
       location.reload();
     } catch (error) {
       if (error.response) {
@@ -42,6 +45,8 @@ const FormAddKHS = () => {
       }
     }
   };
+
+  const li_angkatan = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   return (
     <div className="min-h-[65vh] mb-16 p-12 pb-16 relative bg-white flex-initial w-10/12">
@@ -74,7 +79,6 @@ const FormAddKHS = () => {
               Semester
             </label>
             <select
-              defaultValue="2"
               required
               onChange={(e) => setSmt_khs(e.target.value)}
               onBlur={(e) => setSmt_khs(e.target.value)}
@@ -82,10 +86,10 @@ const FormAddKHS = () => {
               id="smt_khs"
               className="p-1.5 htmlForm-control border border-solid border-gray-300 rounded focus:border-gray-500 focus:outline-none"
             >
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
+              <option>--Pilih Semester--</option>
+              {li_angkatan.map((opt) => (
+                <option value={opt}>{opt}</option>
+              ))}
             </select>
           </div>
           <div className="form-group flex flex-col my-4">
@@ -169,19 +173,18 @@ const FormAddKHS = () => {
             </label>
             <input
               required
-              value={file_khs}
-              onChange={(e) => setFile_khs(e.target.value)}
+              onChange={loadFile}
               type="file"
               name="file_khs"
               id="file_khs"
               className="p-1.5 htmlForm-control border border-solid border-gray-300 rounded focus:border-gray-500 focus:outline-none"
             />
           </div>
-          <div className="flex items-center justify-end">
-            <button className="mt-5 bg-green-300 text-white font-semibold py-2 px-6">
-              Simpan
-            </button>
-          </div>
+        </div>
+        <div className="">
+          <button className="rounded bg-green-600 text-white py-2 px-6">
+            Simpan
+          </button>
         </div>
       </form>
 

@@ -6,6 +6,8 @@ import BarChartSkripsi from "../../components/Chart_BarSkripsi";
 import ResultPKL from "../../components/Dsn_ResultPKL";
 
 import Layout from "../Layout";
+import Pagination from "../../components/Pagination";
+
 const DataSkripsiDsn = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -15,6 +17,8 @@ const DataSkripsiDsn = () => {
   const [angkatan, setAngkatan] = useState("");
   const [keyword, setKeyword] = useState("");
   const [mahasiswa, setMahasiswa] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [dataPerPage] = useState(15);
 
   useEffect(() => {
     dispatch(getMe());
@@ -54,6 +58,13 @@ const DataSkripsiDsn = () => {
       setMahasiswa([]);
     }
   }
+
+  // Get current posts
+  const indexOfLastData = currentPage * dataPerPage;
+  const indexOfFirstData = indexOfLastData - dataPerPage;
+  const currentData = mahasiswa.slice(indexOfFirstData, indexOfLastData);
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const li_angkatan = [2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
 
@@ -176,10 +187,16 @@ const DataSkripsiDsn = () => {
           <div class="overflow-x-auto sm:-mx-4 lg:-mx-8">
             <div class="py-4 inline-block min-w-full sm:px-6 lg:px-8">
               <div class="overflow-hidden" id="cetak">
-                <ResultPKL mahasiswa={mahasiswa} />
+                <ResultPKL mahasiswa={currentData} />
               </div>
             </div>
           </div>
+          <Pagination
+            dataPerPage={dataPerPage}
+            totalData={mahasiswa.length}
+            paginate={paginate}
+            currentPage={currentPage}
+          />
         </div>
       </div>
     </Layout>

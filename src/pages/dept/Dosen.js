@@ -6,12 +6,15 @@ import ResultDsn from "../../components/Dept_ResultDsn";
 import { getMe } from "../../features/authSlice";
 
 import Layout from "../Layout";
+import Pagination from "../../components/Pagination";
 
 const DosenForDept = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isError, user } = useSelector((state) => state.auth);
   const [keyword, setKeyword] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [dataPerPage] = useState(15);
   const [dosen, setDosen] = useState([]);
 
   useEffect(() => {
@@ -22,17 +25,17 @@ const DosenForDept = () => {
     if (isError) {
       navigate("/");
     }
-     if (user) {
-       if (!user.nip) {
-         // kalo ga dept, cabut
-         navigate("/dashboard");
-       }
-     }
+    if (user) {
+      if (!user.nip) {
+        // kalo ga dept, cabut
+        navigate("/dashboard");
+      }
+    }
   }, [isError, user, navigate]);
 
   useEffect(() => {
     requestLecturers();
-  }, []);
+  }, [keyword]);
 
   async function requestLecturers() {
     try {
@@ -51,6 +54,13 @@ const DosenForDept = () => {
       setDosen([]);
     }
   }
+
+  // Get current posts
+  const indexOfLastData = currentPage * dataPerPage;
+  const indexOfFirstData = indexOfLastData - dataPerPage;
+  const currentData = dosen.slice(indexOfFirstData, indexOfLastData);
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <Layout>
@@ -87,35 +97,37 @@ const DosenForDept = () => {
           </div>
           <h3 className="text-lg font-normal">Fakultas Sains dan Matematika</h3>
         </div>
-        <div class="mb-5 px-5 relative bg-white flex-initial row flex my-4">
-          <div className="offset-md-2 col md-2">
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                requestLecturers();
-              }}
-            >
-              <label htmlFor="keyword">
-                <input
-                  class="form-control px-2 py-1 border bg-gray-300"
-                  id="keyword"
-                  placeholder="Cari Nama atau NIM"
-                  onChange={(e) => {
-                    setKeyword(e.target.value);
-                    requestLecturers();
-                  }}
-                />
-              </label>
-            </form>
-          </div>
+        <div className="px-5 form-label inline-block mb-2 text-gray-600">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+            }}
+          >
+            <label htmlFor="keyword">
+              <input
+                class="form-control pl-6 pr-12 py-2 rounded border border-slate-500"
+                id="keyword"
+                placeholder="Cari Nama atau NIM"
+                onChange={(e) => {
+                  setKeyword(e.target.value);
+                  requestLecturers();
+                }}
+              />
+            </label>
+          </form>
         </div>
-
         <div class="flex flex-col px-5">
           <div class="overflow-x-auto">
             <div class="py-4 inline-block min-w-full" id="cetak">
-              <ResultDsn dosen={dosen} />
+              <ResultDsn dosen={currentData} />
             </div>
           </div>
+          <Pagination
+            dataPerPage={dataPerPage}
+            totalData={dosen.length}
+            paginate={paginate}
+            currentPage={currentPage}
+          />
         </div>
       </div>
     </Layout>

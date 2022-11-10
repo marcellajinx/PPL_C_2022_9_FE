@@ -1,4 +1,8 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
+
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +12,7 @@ import pencil from "../../../public/images/pencil.png";
 import view from "../../../public/images/view.png";
 import checklist from "../../../public/images/checklist.png";
 import Layout from "../Layout";
-import axios from "axios";
+import Pagination from "../../components/Pagination";
 
 const VerifikasiIRS = () => {
   const dispatch = useDispatch();
@@ -17,9 +21,52 @@ const VerifikasiIRS = () => {
   const { isError, user } = useSelector((state) => state.auth);
   const [msg, setMsg] = useState("");
 
-  const [irs, setIRS] = useState([]);
+  const [irs, setIRS] = useState([]); // all irs may with or not with filter and/or search
+  const [currentPage, setCurrentPage] = useState(1);
+  const [dataPerPage] = useState(15);
   const [keyword, setKeyword] = useState("");
   const [status, setStatus] = useState("");
+
+  // for modal
+  const [show, setShow] = useState();
+  const [semShow, setSemShow] = useState("");
+  const [sksShow, setSKSShow] = useState("");
+  const [nimShow, setNIMShow] = useState("");
+  const handleClose = () => setShow(false);
+  const handleShow = function (el) {
+    setShow(true);
+    setSemShow(el.smt_irs);
+    setSKSShow(el.jml_sks);
+    setNIMShow(el.nim);
+    // setFileShow(el.fire_irs);
+  };
+  const handleSubmit = function (nim) {
+    updateIRS(nim);
+    setShow(false);
+  };
+
+  // for updating file
+  const [file, setFile] = useState("");
+  // const [fileShow, setFileShow] = useState("");
+  const loadFile = (e) => {
+    const file_irs = e.target.files[0];
+    setFile(file_irs);
+  };
+
+  const updateIRS = async (nim) => {
+    // e.preventDefault();
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("smt_irs", semShow);
+    formData.append("jml_sks", sksShow);
+    try {
+      await axios.patch(`http://localhost:5000/irs/${nim}`, formData);
+      btnEdit === true ? setBtnEdit(false) : setBtnEdit(true); // trigger change
+      // location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     dispatch(getMe());
@@ -53,9 +100,11 @@ const VerifikasiIRS = () => {
   //   }
   // }
 
+  const [btnVerif, setBtnVerif] = useState(false);
+  const [btnEdit, setBtnEdit] = useState(false);
   useEffect(() => {
     filterVerifIRS();
-  }, [user, status, keyword]);
+  }, [user, status, keyword, btnVerif, btnEdit]);
 
   async function filterVerifIRS() {
     try {
@@ -70,6 +119,13 @@ const VerifikasiIRS = () => {
     }
   }
 
+  // Get current posts
+  const indexOfLastData = currentPage * dataPerPage;
+  const indexOfFirstData = indexOfLastData - dataPerPage;
+  const currentData = irs.slice(indexOfFirstData, indexOfLastData);
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   const clickBtnVerif = async (e, el) => {
     e.preventDefault();
     try {
@@ -77,7 +133,7 @@ const VerifikasiIRS = () => {
         nim: el.nim,
         smt_irs: el.smt_irs,
       });
-      el.status_verifikasi = "1"; // trigger change
+      btnVerif === true ? setBtnVerif(false) : setBtnVerif(true); // trigger change
       // location.reload();
     } catch (error) {
       console.log(error);
@@ -87,9 +143,101 @@ const VerifikasiIRS = () => {
     }
   };
 
+  // const li_angkatan = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
   return (
     <Layout>
       <div className="mb-16 p-16 pb-16 relative bg-white flex-initial w-10/12">
+        <Modal
+          show={show}
+          onHide={handleClose}
+          className="rounded-xl fade w-1/3 top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 p-8 m-0 fixed modal show bg-slate-100"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title className="font-bold text-2xl modal-title h4">
+              Isian Rencana Studi
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <form>
+              {/* <div className="form-group flex flex-col my-4">
+                <label
+                  htmlFor="smt_irs"
+                  className="form-label inline-block mb-2 text-gray-700"
+                >
+                  Semester Aktif
+                </label>
+                <select
+                  value={semShow}
+                  required
+                  onChange={(e) => setSemShow(e.target.value)}
+                  onBlur={(e) => setSemShow(e.target.value)}
+                  name="smt_irs"
+                  id="smt_irs"
+                  className="p-1.5 form-control border border-solid border-gray-300 rounded focus:border-gray-500 focus:outline-none"
+                >
+                  <option>--Pilih Semester--</option>
+                  {li_angkatan.map((opt) => (
+                    <option
+                      value={opt}
+                      selected={opt == semShow ? true : false}
+                    >
+                      {opt}
+                    </option>
+                  ))}
+                </select>
+              </div> */}
+              <div className="form-group flex flex-col my-4">
+                <label
+                  htmlFor="jml_sks"
+                  className="form-label inline-block mb-2 text-gray-700"
+                >
+                  Jumlah SKS
+                </label>
+                <input
+                  required
+                  value={sksShow}
+                  onChange={(e) => setSKSShow(e.target.value)}
+                  type="number"
+                  name="jml_sks"
+                  id="jml_sks"
+                  className="p-1.5 form-control border border-solid border-gray-300 rounded focus:border-gray-500 focus:outline-none"
+                />
+              </div>
+              <div className="form-group flex flex-col my-4">
+                <label
+                  htmlFor="file_irs"
+                  className="form-label inline-block mb-2 text-gray-700"
+                >
+                  File IRS
+                </label>
+                <input
+                  required
+                  // value={fileShow}
+                  onChange={loadFile}
+                  type="file"
+                  name="file_irs"
+                  id="file_irs"
+                  className="p-1.5 form-control border border-solid border-gray-300 rounded focus:border-gray-500 focus:outline-none"
+                />
+              </div>
+            </form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              onClick={handleClose}
+              className="mr-5 rounded-md py-2 px-5 bg-slate-800 text-white"
+            >
+              Close
+            </Button>
+            <Button
+              onClick={(e) => handleSubmit(nimShow)}
+              className="text-white rounded-md py-2 px-5 bg-green-500"
+            >
+              Save Changes
+            </Button>
+          </Modal.Footer>
+        </Modal>
         <div className="mb-4 pb-1 relative bg-white flex-initial">
           <div className="flow-root">
             <h3 className="text-lg font-normal float-left flex my-1">
@@ -217,7 +365,7 @@ const VerifikasiIRS = () => {
                         <td></td>
                       </tr>
                     ) : (
-                      irs.map((el, idx) => {
+                      currentData.map((el, idx) => {
                         return (
                           <tr className="bg-white border-b">
                             <td className="py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r border-l">
@@ -245,14 +393,17 @@ const VerifikasiIRS = () => {
                             </td>
                             <td className="text-sm text-gray-900 font-light py-4 whitespace-nowrap border-r">
                               <div className="flex justify-between">
-                                <a>
+                                <button
+                                  type="button"
+                                  onClick={() => printJS(el.url)}
+                                >
                                   <img
                                     className="h-6 py-1 align-center"
                                     src={view}
                                   />
-                                </a>
+                                </button>
 
-                                <a>
+                                <a onClick={() => handleShow(el)}>
                                   <img
                                     className="h-6 align-center"
                                     src={pencil}
@@ -320,6 +471,12 @@ const VerifikasiIRS = () => {
               </div>
             </div>
           </div>
+          <Pagination
+            dataPerPage={dataPerPage}
+            totalData={irs.length}
+            paginate={paginate}
+            currentPage={currentPage}
+          />
         </div>
       </div>
     </Layout>

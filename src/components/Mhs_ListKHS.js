@@ -43,7 +43,7 @@ const ListKHS = () => {
         let ariacontrols = `accordion-flush-body-${idx + 1}`;
         return (
           <>
-            <h2 id={h2id}>
+            <h2 id={h2id} className="mt-5">
               <button
                 type="button"
                 className="flex items-center justify-between w-full py-5 font-medium text-left text-gray-500 border-b border-t border-gray-200"
@@ -68,67 +68,78 @@ const ListKHS = () => {
               </button>
             </h2>
             <div id={ariacontrols} className="" aria-labelledby={h2id}>
-              <div className="py-5 font-light border-b border-gray-200">
-                <div className="sem-group flex mb-2">
-                  <p className="grid place-items-center flex-initial w-1/6 justify-start">
-                    Status Mahasiswa
-                  </p>
-                  <div className="border border-grey-100 w-36 pl-3 py-1 align-left">
-                    AKTIF
+              <div className="flex py-5 font-light border-b border-gray-200">
+                <div className="w-full">
+                  <div className="sem-group flex mb-2">
+                    <p className="grid place-items-center flex-initial w-2/6 justify-start">
+                      Status Mahasiswa
+                    </p>
+                    <div className="border border-grey-100 w-36 pl-3 py-1 align-left">
+                      AKTIF
+                    </div>
+                  </div>
+
+                  <div className="sem-group flex mb-2">
+                    <p className="grid place-items-center flex-initial w-2/6 justify-start">
+                      Semester Aktif
+                    </p>
+                    <div className="border border-grey-100 w-36 pl-3 py-1 align-left">
+                      {el.smt_khs}
+                    </div>
+                  </div>
+
+                  <div className="sem-group flex mb-2">
+                    <p className="grid place-items-center flex-initial w-2/6 justify-start">
+                      Jumlah SKS
+                    </p>
+                    <div className="border border-grey-100 w-36 pl-3 py-1 align-left">
+                      {el.jml_sks}
+                    </div>
                   </div>
                 </div>
 
-                <div className="sem-group flex mb-2">
-                  <p className="grid place-items-center flex-initial w-1/6 justify-start">
-                    Semester Aktif
-                  </p>
-                  <div className="border border-grey-100 w-36 pl-3 py-1 align-left">
-                    {el.smt_khs}
+                <div className="w-full">
+                  <div className="sem-group flex mb-2">
+                    <p className="grid place-items-center flex-initial w-2/6 justify-start">
+                      Jumlah SKS Kumulatif
+                    </p>
+                    <div className="border border-grey-100 w-36 pl-3 py-1 align-left">
+                      {el.jml_sksk}
+                    </div>
+                  </div>
+
+                  <div className="sem-group flex mb-2">
+                    <p className="grid place-items-center flex-initial w-2/6 justify-start">
+                      IP Semester
+                    </p>
+                    <div className="border border-grey-100 w-36 pl-3 py-1 align-left">
+                      {el.ips}
+                    </div>
                   </div>
                 </div>
 
-                <div className="sem-group flex mb-2">
-                  <p className="grid place-items-center flex-initial w-1/6 justify-start">
-                    Jumlah SKS
-                  </p>
-                  <div className="border border-grey-100 w-36 pl-3 py-1 align-left">
-                    {el.jml_sks}
+                <div className="w-full">
+                  <div className="sem-group flex mb-2">
+                    <p className="grid place-items-center flex-initial w-2/6 justify-start">
+                      IP Kuantitatif
+                    </p>
+                    <div className="border border-grey-100 w-36 pl-3 py-1 align-left">
+                      {el.ipk}
+                    </div>
                   </div>
-                </div>
 
-                <div className="sem-group flex mb-2">
-                  <p className="grid place-items-center flex-initial w-1/6 justify-start">
-                    Jumlah SKS Kumulatif
-                  </p>
-                  <div className="border border-grey-100 w-36 pl-3 py-1 align-left">
-                    {el.jml_sksk}
-                  </div>
-                </div>
-
-                <div className="sem-group flex mb-2">
-                  <p className="grid place-items-center flex-initial w-1/6 justify-start">
-                    IP Semester
-                  </p>
-                  <div className="border border-grey-100 w-36 pl-3 py-1 align-left">
-                    {el.ips}
-                  </div>
-                </div>
-
-                <div className="sem-group flex mb-2">
-                  <p className="grid place-items-center flex-initial w-1/6 justify-start">
-                    IPK
-                  </p>
-                  <div className="border border-grey-100 w-36 pl-3 py-1 align-left">
-                    {el.ipk}
-                  </div>
-                </div>
-
-                <div className="sem-group flex mb-2">
-                  <p className="grid place-items-center flex-initial w-1/6 justify-start">
-                    KHS
-                  </p>
-                  <div className="border border-grey-100 bg-blue-300 font-white px-6 py-1 font-sm">
-                    <a href="{el.file_khs}">Lihat KHS</a>
+                  <div className="sem-group flex mb-2">
+                    <p className="grid place-items-center flex-initial w-2/6 justify-start">
+                      KHS
+                    </p>
+                    <div className="text-center rounded bg-yellow-500 text-white w-36 py-2 align-left">
+                      <button
+                        type={el.file_irs}
+                        onClick={() => printJS(el.url)}
+                      >
+                        Lihat KHS
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>

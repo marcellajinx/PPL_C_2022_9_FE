@@ -5,17 +5,20 @@ import { useNavigate } from "react-router-dom";
 import { getMe } from "../../features/authSlice";
 
 import Layout from "../Layout";
+import Pagination from "../../components/Pagination";
+
 import { useState } from "react";
 import ResultMhs from "../../components/Dept_ResultMhs";
-
-import print from "print-js";
 
 const MahasiswaForDept = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isError, user } = useSelector((state) => state.auth);
+  const [angkatan, setAngkatan] = useState("");
   const [keyword, setKeyword] = useState("");
   const [mahasiswa, setMahasiswa] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [dataPerPage] = useState(15);
   useEffect(() => {
     dispatch(getMe());
   }, [dispatch]);
@@ -34,22 +37,35 @@ const MahasiswaForDept = () => {
 
   useEffect(() => {
     requestStudents();
-  }, []);
+  }, [keyword, angkatan]);
 
   async function requestStudents() {
     try {
       let response;
-      if (keyword == "") {
+      if (keyword == "" && angkatan == "") {
         response = await fetch(`http://localhost:5000/mahasiswa`);
       } else {
-        response = await fetch(`http://localhost:5000/mahasiswas/${keyword}//`);
+        let url = "http://localhost:5000/mahasiswas/";
+        keyword == "" ? (url += " /") : (url += `${keyword}/`);
+        angkatan == "" ? (url += " / /") : (url += ` /${angkatan}`);
+        response = await fetch(url);
       }
       let json = await response.json();
       setMahasiswa(json);
     } catch (error) {
+      console.log(error);
       setMahasiswa([]);
     }
   }
+
+  // Get current posts
+  const indexOfLastData = currentPage * dataPerPage;
+  const indexOfFirstData = indexOfLastData - dataPerPage;
+  const currentData = mahasiswa.slice(indexOfFirstData, indexOfLastData);
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const li_angkatan = [2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
 
   return (
     <Layout>
@@ -88,17 +104,16 @@ const MahasiswaForDept = () => {
             Fakultas Sains dan Matermatika
           </h3>
         </div>
-        <div class="mb-5 px-5 relative bg-white flex-initial row flex my-4">
-          <div className="offset-md-2 col md-2">
+        <div class="px-5 flex">
+          <div className="mr-8 form-label inline-block mb-2 text-gray-600">
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                requestStudents();
               }}
             >
               <label htmlFor="keyword">
                 <input
-                  class="form-control px-2 py-1 border bg-gray-300"
+                  class="form-control pl-6 pr-12 py-2 rounded border border-slate-500"
                   id="keyword"
                   placeholder="Cari Nama atau NIM"
                   onChange={(e) => {
@@ -109,14 +124,42 @@ const MahasiswaForDept = () => {
               </label>
             </form>
           </div>
+          <div className="form-label inline-block mb-2 text-gray-600">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+              }}
+            >
+              <select
+                name="angkatan"
+                id="angkatan"
+                className="p-2 w-36 form-control rounded border border-slate-500"
+                onChange={(e) => setAngkatan(e.target.value)}
+                onBlur={(e) => setAngkatan(e.target.value)}
+              >
+                <option value="">Angkatan</option>
+                {li_angkatan.map((li) => (
+                  <option value={li} key={li}>
+                    {li}
+                  </option>
+                ))}
+              </select>
+            </form>
+          </div>
         </div>
 
         <div class="flex flex-col px-5">
           <div class="overflow-x-auto">
             <div class="py-4 inline-block min-w-full" id="cetak">
-              <ResultMhs mahasiswa={mahasiswa} />
+              <ResultMhs mahasiswa={currentData} />
             </div>
           </div>
+          <Pagination
+            dataPerPage={dataPerPage}
+            totalData={mahasiswa.length}
+            paginate={paginate}
+            currentPage={currentPage}
+          />
         </div>
       </div>
     </Layout>

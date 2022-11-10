@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -7,6 +6,7 @@ import PieChartStatus from "../../components/Chart_PieStatus";
 import ResultStatus from "../../components/Dsn_ResultStatus";
 
 import Layout from "../Layout";
+import Pagination from "../../components/Pagination";
 const DataMhsDsn = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -16,6 +16,8 @@ const DataMhsDsn = () => {
   const [angkatan, setAngkatan] = useState("");
   const [keyword, setKeyword] = useState("");
   const [mahasiswa, setMahasiswa] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [dataPerPage] = useState(15);
 
   useEffect(() => {
     dispatch(getMe());
@@ -55,6 +57,13 @@ const DataMhsDsn = () => {
     }
   }
 
+  // Get current posts
+  const indexOfLastData = currentPage * dataPerPage;
+  const indexOfFirstData = indexOfLastData - dataPerPage;
+  const currentData = mahasiswa.slice(indexOfFirstData, indexOfLastData);
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   const li_angkatan = [2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
 
   return (
@@ -67,8 +76,9 @@ const DataMhsDsn = () => {
             </h3>
             <div className="float-right">
               <button
+                onClick={() => printJS("cetak", "html")}
                 type="button"
-                class="inline-block px-6 pt-2.5 pb-2 bg-yellow-500 text-white font-medium text-xs leading-normal uppercase rounded shadow-md hover:bg-yellow-700 hover:shadow-lg focus:bg-yellow-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-yellow-800 active:shadow-lg transition duration-150 ease-in-out flex align-center"
+                class="px-6 pt-2.5 pb-2 bg-yellow-500 text-white font-medium text-xs leading-normal uppercase rounded shadow-md hover:bg-yellow-700 hover:shadow-lg focus:bg-yellow-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-yellow-800 active:shadow-lg transition duration-150 ease-in-out flex align-center"
               >
                 <svg
                   aria-hidden="true"
@@ -185,151 +195,17 @@ const DataMhsDsn = () => {
         <div class="flex flex-col px-5">
           <div class="overflow-x-auto sm:-mx-4 lg:-mx-8">
             <div class="py-4 inline-block min-w-full sm:px-6 lg:px-8">
-              <div class="overflow-hidden">
-                {/* <table class="min-w-full text-center">
-                  <thead class="border-b bg-gray-300">
-                    <tr>
-                      <th
-                        scope="col"
-                        class="text-sm font-medium text-grey px-6 py-4 border-r border-l"
-                      >
-                        No
-                      </th>
-                      <th
-                        scope="col"
-                        class="text-sm font-medium text-grey px-6 py-4 border-r"
-                      >
-                        Nama
-                      </th>
-                      <th
-                        scope="col"
-                        class="text-sm font-medium text-grey px-6 py-4 border-r"
-                      >
-                        NIM
-                      </th>
-                      <th
-                        scope="col"
-                        class="text-sm font-medium text-grey px-6 py-4 border-r"
-                      >
-                        Angkatan
-                      </th>
-                      <th
-                        scope="col"
-                        class="text-sm font-medium text-grey px-6 py-4 border-r"
-                      >
-                        Status
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr class="bg-white border-b">
-                      <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r border-l">
-                        1
-                      </td>
-                      <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">
-                        London Fog Heather Est
-                      </td>
-                      <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">
-                        24060120120000
-                      </td>
-                      <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">
-                        2020
-                      </td>
-                      <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">
-                        Aktif
-                      </td>
-                    </tr>
-                    <tr class="bg-white border-b">
-                      <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r border-l">
-                        2
-                      </td>
-                      <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">
-                        London Fog Heather Est
-                      </td>
-                      <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">
-                        24060120120000
-                      </td>
-                      <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">
-                        2020
-                      </td>
-                      <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">
-                        Aktif
-                      </td>
-                    </tr>
-                    <tr class="bg-white border-b">
-                      <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r border-l">
-                        3
-                      </td>
-                      <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">
-                        London Fog Heather Est
-                      </td>
-                      <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">
-                        24060120120000
-                      </td>
-                      <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">
-                        2020
-                      </td>
-                      <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">
-                        Aktif
-                      </td>
-                    </tr>
-                    <tr class="bg-white border-b">
-                      <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r border-l">
-                        4
-                      </td>
-                      <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">
-                        London Fog Heather Est
-                      </td>
-                      <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">
-                        24060120120000
-                      </td>
-                      <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">
-                        2020
-                      </td>
-                      <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">
-                        Aktif
-                      </td>
-                    </tr>
-                    <tr class="bg-white border-b">
-                      <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r border-l">
-                        5
-                      </td>
-                      <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">
-                        London Fog Heather Est
-                      </td>
-                      <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">
-                        24060120120000
-                      </td>
-                      <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">
-                        2020
-                      </td>
-                      <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">
-                        Aktif
-                      </td>
-                    </tr>
-                    <tr class="bg-white border-b">
-                      <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 border-r border-l">
-                        6
-                      </td>
-                      <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">
-                        London Fog Heather Est
-                      </td>
-                      <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">
-                        24060120120000
-                      </td>
-                      <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">
-                        2020
-                      </td>
-                      <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap border-r">
-                        Aktif
-                      </td>
-                    </tr>
-                  </tbody>
-                </table> */}
-                <ResultStatus mahasiswa={mahasiswa} />
+              <div class="overflow-hidden" id="cetak">
+                <ResultStatus mahasiswa={currentData} />
               </div>
             </div>
           </div>
+          <Pagination
+            dataPerPage={dataPerPage}
+            totalData={mahasiswa.length}
+            paginate={paginate}
+            currentPage={currentPage}
+          />
         </div>
       </div>
     </Layout>

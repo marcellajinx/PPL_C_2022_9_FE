@@ -1,3 +1,4 @@
+import printJS from "print-js";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getMe } from "../features/authSlice";
@@ -43,7 +44,7 @@ const ListIRS = () => {
         let ariacontrols = `accordion-flush-body-${idx + 1}`;
         return (
           <>
-            <h2 id={h2id}>
+            <h2 id={h2id} className="mt-5">
               <button
                 type="button"
                 className="flex items-center justify-between w-full py-5 font-medium text-left text-gray-500 border-b border-t border-gray-200"
@@ -68,40 +69,46 @@ const ListIRS = () => {
               </button>
             </h2>
             <div id={ariacontrols} className="" aria-labelledby={h2id}>
-              <div className="py-5 font-light border-b border-gray-200">
-                <div className="sem-group flex mb-2">
-                  <p className="grid place-items-center flex-initial w-1/6 justify-start">
-                    Status Mahasiswa
-                  </p>
-                  <div className="border border-grey-100 w-36 pl-3 py-1 align-left">
-                    AKTIF
+              <div className="py-5 flex font-light border-b border-gray-200">
+                <div className="w-full">
+                  <div className="sem-group flex mb-2">
+                    <p className="grid place-items-center flex-initial w-2/6 justify-start">
+                      Status Mahasiswa
+                    </p>
+                    <div className="border border-grey-100 w-36 pl-3 py-1 align-left">
+                      AKTIF
+                    </div>
+                  </div>
+
+                  <div className="sem-group flex mb-2">
+                    <p className="grid place-items-center flex-initial w-2/6 justify-start">
+                      Semester Aktif
+                    </p>
+                    <div className="border border-grey-100 w-36 pl-3 py-1 align-left">
+                      {el.smt_irs}
+                    </div>
                   </div>
                 </div>
 
-                <div className="sem-group flex mb-2">
-                  <p className="grid place-items-center flex-initial w-1/6 justify-start">
-                    Semester Aktif
-                  </p>
-                  <div className="border border-grey-100 w-36 pl-3 py-1 align-left">
-                    {el.smt_irs}
+                <div className="w-full">
+                  <div className="sem-group flex mb-2">
+                    <p className="grid place-items-center flex-initial w-2/6 justify-start">
+                      Jumlah SKS
+                    </p>
+                    <div className="border border-grey-100 w-36 pl-3 py-1 align-left">
+                      {el.jml_sks}
+                    </div>
                   </div>
-                </div>
 
-                <div className="sem-group flex mb-2">
-                  <p className="grid place-items-center flex-initial w-1/6 justify-start">
-                    Jumlah SKS
-                  </p>
-                  <div className="border border-grey-100 w-36 pl-3 py-1 align-left">
-                    {el.jml_sks}
-                  </div>
-                </div>
-
-                <div className="sem-group flex mb-2">
-                  <p className="grid place-items-center flex-initial w-1/6 justify-start">
-                    IRS
-                  </p>
-                  <div className="border border-grey-100 bg-blue-300 font-white px-6 py-1 font-sm">
-                    <a href="{el.file_irs}">Lihat IRS</a>
+                  <div className="sem-group flex mb-2">
+                    <p className="grid place-items-center flex-initial w-2/6 justify-start">
+                      IRS
+                    </p>
+                    <div className="text-center rounded bg-yellow-500 text-white w-36 py-2 align-left">
+                      <button type="button" onClick={() => printJS(el.url)}>
+                        Lihat IRS
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>

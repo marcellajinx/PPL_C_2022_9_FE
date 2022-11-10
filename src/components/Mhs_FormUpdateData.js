@@ -25,8 +25,8 @@ const FormUpdateDataMhs = () => {
   const [provinsi, setProvinsi] = useState("");
   const [kelurahan, setKelurahan] = useState("");
 
-  const [file, setFile] = useState("")
-  const [preview, setPreview] = useState("")
+  const [file, setFile] = useState("");
+  const [preview, setPreview] = useState("");
 
   const [provinces, setProvinces] = useState([]);
   const [regencies, setRegencies] = useState([]);
@@ -166,8 +166,8 @@ const FormUpdateDataMhs = () => {
         setKecamatan(response.data.kecamatan);
         setKodePos(response.data.kodepos);
 
-        setFile(response.data.image)
-        setPreview(response.data.url)
+        setFile(response.data.image);
+        setPreview(response.data.url);
       } catch (error) {
         if (error.response) {
           setMsg(error.response.data.msg);
@@ -203,17 +203,16 @@ const FormUpdateDataMhs = () => {
     formData.append("kelurahan", kelurahan);
     formData.append("kodepos", kodepos);
     formData.append("provinsi", provinsi);
-    
-    
+
     try {
       //   let userData = {}; // creates a user json
       // formData.forEach(function(value, key){
       //     userData[key] = value;  // populates user json with form data
       // });
-      console.log(file)
-      await axios.patch(`http://localhost:5000/mahasiswa/${nim}`
-      , formData
-      // , {
+      await axios.patch(
+        `http://localhost:5000/mahasiswa/${nim}`,
+        formData
+        // , {
         // headers: {
         //   "Content-type": "application/x-www-form-urlencoded",
         // },
@@ -235,11 +234,11 @@ const FormUpdateDataMhs = () => {
         // kodepos: kodepos,
         // image: file,
         // url: preview
-      // }
+        // }
       );
       navigate("/dashboard");
     } catch (error) {
-          if (error.response) {
+      if (error.response) {
         setMsg(error.response.data.msg);
       }
     }
@@ -490,15 +489,17 @@ const FormUpdateDataMhs = () => {
             <div className="w-3/5 mx-auto">
               <div className="grid place-items-center shadow-md w-48 h-64 m-8">
                 {preview ? (
-                <img src={preview} alt="Foto Mahasiswa" className="w-10/12"/>
-                ) : ("")}
+                  <img src={preview} alt="Foto Mahasiswa" className="w-10/12" />
+                ) : (
+                  ""
+                )}
               </div>
               <div className="ml-8 bg-transparent py-2  rounded">
                 <input
-                    type="file"
-                    className="file-input"
-                    onChange={loadImage}
-                  />
+                  type="file"
+                  className="file-input"
+                  onChange={loadImage}
+                />
               </div>
             </div>
           </div>
@@ -737,7 +738,7 @@ const FormUpdateDataMhs = () => {
           </div>
 
           <div className="flex justify-end">
-            <button className="ml-6 bg-green-300 hover:bg-blue-500 text-white font-semibold hover:text-white py-2 px-6">
+            <button className="ml-6 rounded bg-green-600 text-white py-2 px-6 hover:bg-blue-500 font-semibold hover:text-white">
               Simpan
             </button>
           </div>

@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getMe } from "../../features/authSlice";
 
+import trophy from "../../../public/images/trophy.png";
+
 const DashboardMhs = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -40,7 +42,9 @@ const DashboardMhs = () => {
 
   const getSem = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/irs/${user && user.nim}`);
+      const response = await fetch(
+        `http://localhost:5000/irs/${user && user.nim}`
+      );
       let json = await response.json();
       setSem(Object.keys(json).length);
     } catch (error) {
@@ -73,11 +77,11 @@ const DashboardMhs = () => {
 
   return (
     <div className="min-h-[65vh] mb-16 p-12 pb-4 relative bg-white flex-initial w-10/12">
-      <h3>Dashboard</h3>
+      <h3 className="text-3xl font-bold">Dashboard</h3>
       <div className="flex my-4">
         <div className="dash-foto">
           <div className="shadow-md w-48 h-64 mr-8 bg-slate-100 border border-slate-100 grid place-items-center">
-            <img src = {user && user.url} alt="Foto profil" className="w-11/12"/>
+            <img src={user && user.url} alt="Foto profil" className="w-11/12" />
           </div>
         </div>
 
@@ -118,10 +122,10 @@ const DashboardMhs = () => {
       </div>
 
       <div className="flex my-8 justify-between">
-        <table className="flex-inline w-3/5 table-auto px-10 py-1 border border-black">
-          <thead className="border border-black bg-gray-200">
-            Status Akademik
-            <br />
+        <table className="flex-inline w-3/5 table-auto px-10 py-1 border border-slate-400">
+          <thead className="bg-slate-300 flex">
+            <img src={trophy} className="w-10 py-2 pl-2 pr-3" />
+            <p className="grid place-items-center">Status Akademik</p>
           </thead>
           <tbody className="text-center">
             <br />
@@ -129,7 +133,7 @@ const DashboardMhs = () => {
             <p>(NIP: {doswal.nip})</p>
             <br />
             <div className="flex justify-center">
-              <div className="border-r-2 border-black px-10">
+              <div className="border-r-2 border-slate-400 px-10">
                 <p>Semester Studi</p>
                 <p>{sem}</p>
               </div>
@@ -144,17 +148,17 @@ const DashboardMhs = () => {
           </tbody>
         </table>
 
-        <table className="flex-inline w-1/3 table-auto px-10 py-1 border border-black">
-          <thead className="border border-black bg-gray-200">
-            Prestasi Akademik
-            <br />
+        <table className="flex-inline w-1/3 table-auto px-10 py-1 border border-slate-400">
+          <thead className="bg-slate-300 flex">
+            <img src={trophy} className="w-10 py-2 pl-2 pr-3" />
+            <p className="grid place-items-center">Prestasi Akademik</p>
           </thead>
           <tbody className="text-center">
             <br />
             <br />
             <br />
             <div className="flex justify-center">
-              <div className="border-r-2 border-black px-10">
+              <div className="border-r-2 border-slate-400 px-10">
                 <p>IPK</p>
                 <p>{khs ? khs.ipk : "-"}</p>
               </div>
