@@ -6,6 +6,6 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 - Clone atau download repositori
 - Install dependency dengan eksekusi perintah `npm i` pada command line
-- Jalankan script `npm build`
+- Jalankan script `npm run build`
 - Jalankan script `npm run dev`
 - Akses http://localhost:1234 
