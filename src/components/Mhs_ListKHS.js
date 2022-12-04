@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getMe } from "../features/authSlice";
+
+import verified from "../../public/images/verified.png";
 const ListKHS = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
@@ -51,7 +53,14 @@ const ListKHS = () => {
                 aria-expanded="true"
                 aria-controls={ariacontrols}
               >
-                <span>Semester-{idx + 1}</span>
+                <div className="flex">
+                  <span className="mr-4">Semester-{idx + 1}</span>
+                  {el.status_khs === "1" ? (
+                    <img src={verified} className="h-6 w-6" />
+                  ) : (
+                    ""
+                  )}
+                </div>
                 <svg
                   data-accordion-icon
                   className="w-6 h-6 rotate-180 shrink-0"

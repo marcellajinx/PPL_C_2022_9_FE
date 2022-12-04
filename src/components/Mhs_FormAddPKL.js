@@ -3,12 +3,15 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
+import verified from "../../public/images/verified.png";
+
 const FormAddPKL = () => {
   const { isError, user } = useSelector((state) => state.auth);
   const [status_mhs, setStatus_mhs] = useState("");
   const [status_pkl, setStatus_pkl] = useState("");
   const [nilai_pkl, setNilai_pkl] = useState("");
   const [smt_pkl, setSmt_pkl] = useState("");
+  const [status_verifikasi, setStatus_verifikasi] = useState("");
   const navigate = useNavigate();
 
   const [pkl, setPKL] = useState([]);
@@ -72,6 +75,7 @@ const FormAddPKL = () => {
       setStatus_pkl(json[0].status_pkl);
       setNilai_pkl(json[0].nilai_pkl);
       setSmt_pkl(json[0].smt_pkl);
+      setStatus_verifikasi(json[0].status_verifikasi);
     } catch (error) {
       console.log(error);
       setPKL([]);
@@ -79,6 +83,7 @@ const FormAddPKL = () => {
       setStatus_pkl("");
       setNilai_pkl("");
       setSmt_pkl("");
+      setStatus_verifikasi("");
     }
   };
 
@@ -86,7 +91,16 @@ const FormAddPKL = () => {
 
   return (
     <div className="min-h-[70vh] mb-16 p-12 pb-16 relative bg-white flex-initial w-10/12">
-      <h3 className="text-3xl font-bold">Praktek Kerja Lapangan (PKL)</h3>
+      <div className="flex">
+        <h3 className="text-3xl font-bold mr-4">
+          Praktek Kerja Lapangan (PKL)
+        </h3>
+        {status_verifikasi === "1" ? (
+          <img src={verified} className="h-9 w-9" />
+        ) : (
+          ""
+        )}
+      </div>
       <div className="mb-12 flex mt-6">
         <div className="dash-foto">
           <div className="shadow-md w-48 h-64 mr-8 bg-slate-100 border border-slate-100 grid place-items-center">

@@ -3,6 +3,8 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
+import verified from "../../public/images/verified.png";
+
 const FormAddSkripsi = () => {
   const { isError, user } = useSelector((state) => state.auth);
   const [status_mhs, setStatus_mhs] = useState("");
@@ -11,6 +13,7 @@ const FormAddSkripsi = () => {
   const [nilai_skripsi, setNilai_skripsi] = useState("");
   const [lama_studi, setLama_studi] = useState("");
   const [tgl_sidang, setTgl_sidang] = useState("");
+  const [status_verifikasi, setStatus_verifikasi] = useState("");
   const navigate = useNavigate();
 
   const [skripsi, setSkripsi] = useState([]);
@@ -80,6 +83,7 @@ const FormAddSkripsi = () => {
       setLama_studi(json[0].lama_studi);
       setTgl_sidang(json[0].tgl_sidang);
       setSmt_skripsi(json[0].smt_skripsi);
+      setStatus_verifikasi(json[0].status_verifikasi);
     } catch (error) {
       console.log(error);
       setSkripsi([]);
@@ -89,6 +93,7 @@ const FormAddSkripsi = () => {
       setLama_studi("");
       setTgl_sidang("");
       setSmt_skripsi("");
+      setStatus_verifikasi("");
     }
   };
 
@@ -96,7 +101,14 @@ const FormAddSkripsi = () => {
 
   return (
     <div className="min-h-[65vh] mb-16 p-12 pb-16 relative bg-white flex-initial w-10/12">
-      <h3 className="text-3xl font-bold">Skripsi</h3>
+      <div className="flex">
+        <h3 className="text-3xl font-bold mr-4">Skripsi</h3>
+        {status_verifikasi === "1" ? (
+          <img src={verified} className="h-9 w-9" />
+        ) : (
+          ""
+        )}
+      </div>
       <div className="flex mt-6">
         <div className="dash-foto">
           <div className="shadow-md w-48 h-64 mr-8 bg-slate-100 border border-slate-100 grid place-items-center">
