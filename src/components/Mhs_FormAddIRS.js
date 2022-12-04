@@ -9,6 +9,7 @@ const FormAddIRS = () => {
   const { isError, user } = useSelector((state) => state.auth);
   const [smt_irs, setSmt_irs] = useState("");
   const [jml_sks, setJml_sks] = useState("");
+  const [status_mhs, setStatus_mhs] = useState("");
   const navigate = useNavigate();
 
   const [msg, setMsg] = useState("");
@@ -41,6 +42,7 @@ const FormAddIRS = () => {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("nim", nim);
+    formData.append("status_mhs", status_mhs);
     formData.append("smt_irs", smt_irs);
     formData.append("status_irs", "0");
     formData.append("jml_sks", jml_sks);
@@ -64,18 +66,21 @@ const FormAddIRS = () => {
         <div className="grid grid-cols-4 gap-4">
           <div className="form-group flex flex-col my-4">
             <label
-              htmlFor="status"
+              htmlFor="status_mhs"
               className="form-label inline-block mb-2 text-gray-700"
             >
               Status Mahasiswa
             </label>
             <select
-              defaultValue="1"
               required
+              value={status_mhs}
+              onChange={(e) => setStatus_mhs(e.target.value)}
+              onBlur={(e) => setStatus_mhs(e.target.value)}
               name="status"
               id="status"
               className="p-1.5 form-control border border-solid border-gray-300 rounded focus:border-gray-500 focus:outline-none"
             >
+              <option value="">Pilih Status Mahasiswa</option>
               <option value="1">AKTIF</option>
               <option value="0">NON-AKTIF</option>
             </select>

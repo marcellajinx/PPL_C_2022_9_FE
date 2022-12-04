@@ -81,11 +81,17 @@ const ListKHS = () => {
 
                   <div className="sem-group flex mb-2">
                     <p className="grid place-items-center flex-initial w-2/6 justify-start">
-                      Semester
+                      Status Mahasiswa
                     </p>
-                    <div className="border border-grey-100 w-36 pl-3 py-1 align-left">
-                      {el.smt_khs}
-                    </div>
+                    {el.status_mhs === "1" ? (
+                      <div className="border border-grey-100 w-36 pl-3 py-1 align-left">
+                        AKTIF
+                      </div>
+                    ) : (
+                      <div className="border border-grey-100 w-36 pl-3 py-1 align-left">
+                        NON-AKTIF
+                      </div>
+                    )}
                   </div>
 
                   <div className="sem-group flex mb-2">

@@ -12,6 +12,7 @@ const FormAddKHS = () => {
   const [jml_sksk, setJml_sksk] = useState("");
   const [ips, setIPS] = useState("");
   const [ipk, setIPK] = useState("");
+  const [status_mhs, setStatus_mhs] = useState("");
   const navigate = useNavigate();
 
   const [msg, setMsg] = useState("");
@@ -45,6 +46,7 @@ const FormAddKHS = () => {
     formData.append("nim", user && user.nim);
     formData.append("smt_khs", smt_khs);
     formData.append("status_khs", "0");
+    formData.append("status_mhs", status_mhs);
     formData.append("jml_sks", jml_sks);
     formData.append("jml_sksk", jml_sksk);
     formData.append("ips", ips);
@@ -69,18 +71,21 @@ const FormAddKHS = () => {
         <div className="grid grid-cols-4 gap-4">
           <div className="form-group flex flex-col my-4">
             <label
-              htmlFor="status"
+              htmlFor="status_mhs"
               className="form-label inline-block mb-2 text-gray-700"
             >
               Status Mahasiswa
             </label>
             <select
-              defaultValue="1"
               required
+              value={status_mhs}
+              onChange={(e) => setStatus_mhs(e.target.value)}
+              onBlur={(e) => setStatus_mhs(e.target.value)}
               name="status"
               id="status"
-              className="p-1.5 htmlForm-control border border-solid border-gray-300 rounded focus:border-gray-500 focus:outline-none"
+              className="p-1.5 form-control border border-solid border-gray-300 rounded focus:border-gray-500 focus:outline-none"
             >
+              <option value="">Pilih Status Mahasiswa</option>
               <option value="1">AKTIF</option>
               <option value="0">NON-AKTIF</option>
             </select>
