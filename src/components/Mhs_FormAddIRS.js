@@ -36,8 +36,8 @@ const FormAddIRS = () => {
       location.reload();
     } catch (error) {
       if (error.response) {
-        console.log(formData);
         setMsg(error.response.data.msg);
+        window.alert(error.response.data.msg);
       }
     }
   };

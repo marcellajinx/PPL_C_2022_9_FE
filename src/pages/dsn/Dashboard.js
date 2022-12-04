@@ -16,9 +16,8 @@ const DashboardDsn = () => {
   const [angkatan, setAngkatan] = useState("2016");
   const [dataPerwalian, setDataPerwalian] = useState([]);
 
-  
-  const [file, setFile] = useState("")
-  const [preview, setPreview] = useState("")
+  const [file, setFile] = useState("");
+  const [preview, setPreview] = useState("");
 
   useEffect(() => {
     dispatch(getMe());
@@ -47,8 +46,8 @@ const DashboardDsn = () => {
       setKontak(response.data.no_hp);
       setNIP(response.data.nip);
 
-      setFile(response.data.image)
-        setPreview(response.data.url)
+      setFile(response.data.image);
+      setPreview(response.data.url);
     } catch (error) {
       console.log(error);
       if (error.response) {
@@ -99,9 +98,9 @@ const DashboardDsn = () => {
       location.reload();
       // navigate("/dashboard");
     } catch (error) {
-      console.log(error);
       if (error.response) {
         setMsg(error.response.data.msg);
+        window.alert(error.response.data.msg);
       }
     }
   };
@@ -200,17 +199,23 @@ const DashboardDsn = () => {
               </div>
               <div className="w-3/5 mx-auto">
                 <div className="grid place-items-center shadow-md w-48 h-56 m-8">
-                {preview ? (
-                <img src={preview} alt="Foto Mahasiswa" className="w-10/12"/>
-                ) :("")}
-              </div>
-              <div className="ml-8 bg-transparent py-2  rounded">
-                <input
+                  {preview ? (
+                    <img
+                      src={preview}
+                      alt="Foto Mahasiswa"
+                      className="w-10/12"
+                    />
+                  ) : (
+                    ""
+                  )}
+                </div>
+                <div className="ml-8 bg-transparent py-2  rounded">
+                  <input
                     type="file"
                     className="file-input"
                     onChange={loadImage}
                   />
-              </div>
+                </div>
               </div>
             </div>
           </form>

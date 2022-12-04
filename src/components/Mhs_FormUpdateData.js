@@ -240,6 +240,7 @@ const FormUpdateDataMhs = () => {
     } catch (error) {
       if (error.response) {
         setMsg(error.response.data.msg);
+        window.alert(error.response.data.msg);
       }
     }
   };

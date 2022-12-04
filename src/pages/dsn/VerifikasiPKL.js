@@ -64,7 +64,10 @@ const VerifikasiPKL = () => {
       btnEdit === true ? setBtnEdit(false) : setBtnEdit(true); // trigger change
       // location.reload();
     } catch (error) {
-      console.log(error);
+      if (error.response) {
+        setMsg(error.response.data.msg);
+        window.alert(error.response.data.msg);
+      }
     }
   };
 
