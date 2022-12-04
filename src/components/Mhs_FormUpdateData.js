@@ -297,6 +297,7 @@ const FormUpdateDataMhs = () => {
                   id="angkatan"
                   className="p-1.5 form-control border border-solid border-gray-300 rounded focus:border-gray-500 focus:outline-none"
                 >
+                  <option value="">Pilih Angkatan</option>
                   {li_angkatan.map((opt) => (
                     <option
                       value={opt}
@@ -365,7 +366,6 @@ const FormUpdateDataMhs = () => {
                   Jalur Masuk
                 </label>
                 <select
-                  defaultValue="SNMPTN"
                   required
                   value={jalur_masuk}
                   onChange={(e) => setJalurMasuk(e.target.value)}
@@ -373,6 +373,7 @@ const FormUpdateDataMhs = () => {
                   id="jalur_masuk"
                   className="p-1.5 form-control border border-solid border-gray-300 rounded focus:border-gray-500 focus:outline-none"
                 >
+                  <option value="">Pilih Jalur Masuk</option>
                   {li_jalur.map((opt) => (
                     <option
                       value={opt}
@@ -415,6 +416,7 @@ const FormUpdateDataMhs = () => {
                   id="status"
                   className="p-1.5 form-control border border-solid border-gray-300 rounded focus:border-gray-500 focus:outline-none"
                 >
+                  <option value="">Pilih Status</option>
                   <option value="1" selected={status == 1 ? true : false}>
                     AKTIF
                   </option>
@@ -474,7 +476,7 @@ const FormUpdateDataMhs = () => {
                   id="doswal"
                   className="p-1.5 form-control border border-solid border-gray-300 rounded focus:border-gray-500 focus:outline-none"
                 >
-                  <option value="0">--Pilih Dosen Wali--</option>
+                  <option value="">--Pilih Dosen Wali--</option>
                   {doswals.map((opt) => (
                     <option
                       value={opt.kode_wali}
@@ -552,7 +554,7 @@ const FormUpdateDataMhs = () => {
                   id="kota"
                   className="p-1.5 form-control border border-solid border-gray-300 rounded focus:border-gray-500 focus:outline-none"
                 >
-                  <option value="0">--Pilih Kota-</option>
+                  <option value="">--Pilih Kota-</option>
                   {regencies.map((opt) => (
                     <option
                       value={opt.id}
@@ -617,7 +619,7 @@ const FormUpdateDataMhs = () => {
                     id="rt"
                     className="p-1.5 form-control border border-solid border-gray-300 rounded focus:border-gray-500 focus:outline-none"
                   >
-                    <option value="0">--Pilih RT-</option>
+                    <option value="">--Pilih RT-</option>
                   </select>
                 </div>
                 <div className="form-group flex flex-col my-4">
@@ -662,7 +664,7 @@ const FormUpdateDataMhs = () => {
                   id="provinsi"
                   className="p-1.5 form-control border border-solid border-gray-300 rounded focus:border-gray-500 focus:outline-none"
                 >
-                  <option value="0">--Pilih Provinsi--</option>
+                  <option value="">--Pilih Provinsi--</option>
                   {provinces.map((opt) => (
                     <option
                       value={opt.id}
@@ -724,7 +726,7 @@ const FormUpdateDataMhs = () => {
                   id="kodepos"
                   className="p-1.5 form-control border border-solid border-gray-300 rounded focus:border-gray-500 focus:outline-none"
                 >
-                  <option value="0">--Pilih Kode Pos-</option>
+                  <option value="">--Pilih Kode Pos-</option>
                   {postal.map((opt) => (
                     <option
                       value={opt.kodepos}

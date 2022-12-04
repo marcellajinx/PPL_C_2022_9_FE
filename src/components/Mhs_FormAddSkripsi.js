@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const FormAddSkripsi = () => {
-  const { user } = useSelector((state) => state.auth);
+  const { isError, user } = useSelector((state) => state.auth);
   const [status_mhs, setStatus_mhs] = useState("");
   const [status_skripsi, setStatus_skripsi] = useState("");
   const [smt_skripsi, setSmt_skripsi] = useState("");
   const [nilai_skripsi, setNilai_skripsi] = useState("");
   const [lama_studi, setLama_studi] = useState("");
   const [tgl_sidang, setTgl_sidang] = useState("");
+  const navigate = useNavigate();
 
   const [skripsi, setSkripsi] = useState([]);
 
@@ -19,6 +21,17 @@ const FormAddSkripsi = () => {
   if (user && user.nim) {
     nim = user.nim;
   }
+
+  useEffect(() => {
+    if (isError) {
+      navigate("/");
+    }
+    if (user) {
+      if (user.no_hp === "" || user.no_hp === "NOT SET") {
+        navigate("/data");
+      }
+    }
+  }, [isError, user, navigate]);
 
   // for uploading file
   const [file, setFile] = useState("");

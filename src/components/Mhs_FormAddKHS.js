@@ -1,16 +1,18 @@
 import ListKHS from "./Mhs_ListKHS";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const FormAddKHS = () => {
-  const { user } = useSelector((state) => state.auth);
+  const { isError, user } = useSelector((state) => state.auth);
   const [smt_khs, setSmt_khs] = useState("");
   const [jml_sks, setJml_sks] = useState("");
   const [jml_sksk, setJml_sksk] = useState("");
   const [ips, setIPS] = useState("");
   const [ipk, setIPK] = useState("");
+  const navigate = useNavigate();
 
   const [msg, setMsg] = useState("");
 
@@ -18,6 +20,17 @@ const FormAddKHS = () => {
   if (user && user.nim) {
     nim = user.nim;
   }
+
+  useEffect(() => {
+    if (isError) {
+      navigate("/");
+    }
+    if (user) {
+      if (user.no_hp === "" || user.no_hp === "NOT SET") {
+        navigate("/data");
+      }
+    }
+  }, [isError, user, navigate]);
 
   // for uploading file
   const [file, setFile] = useState("");

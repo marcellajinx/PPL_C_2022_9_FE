@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const FormAddPKL = () => {
-  const { user } = useSelector((state) => state.auth);
+  const { isError, user } = useSelector((state) => state.auth);
   const [status_mhs, setStatus_mhs] = useState("");
   const [status_pkl, setStatus_pkl] = useState("");
   const [nilai_pkl, setNilai_pkl] = useState("");
   const [smt_pkl, setSmt_pkl] = useState("");
+  const navigate = useNavigate();
 
   const [pkl, setPKL] = useState([]);
 
@@ -17,6 +19,17 @@ const FormAddPKL = () => {
   if (user && user.nim) {
     nim = user.nim;
   }
+
+  useEffect(() => {
+    if (isError) {
+      navigate("/");
+    }
+    if (user) {
+      if (user.no_hp === "" || user.no_hp === "NOT SET") {
+        navigate("/data");
+      }
+    }
+  }, [isError, user, navigate]);
 
   // for uploading file
   const [file, setFile] = useState("");

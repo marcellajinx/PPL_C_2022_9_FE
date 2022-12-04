@@ -1,13 +1,15 @@
 import ListIRS from "./Mhs_ListIRS";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const FormAddIRS = () => {
-  const { user } = useSelector((state) => state.auth);
+  const { isError, user } = useSelector((state) => state.auth);
   const [smt_irs, setSmt_irs] = useState("");
   const [jml_sks, setJml_sks] = useState("");
+  const navigate = useNavigate();
 
   const [msg, setMsg] = useState("");
 
@@ -15,6 +17,17 @@ const FormAddIRS = () => {
   if (user && user.nim) {
     nim = user.nim;
   }
+
+  useEffect(() => {
+    if (isError) {
+      navigate("/");
+    }
+    if (user) {
+      if (user.no_hp === "" || user.no_hp === "NOT SET") {
+        navigate("/data");
+      }
+    }
+  }, [isError, user, navigate]);
 
   // for uploading file
   const [file, setFile] = useState("");
