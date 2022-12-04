@@ -35,17 +35,19 @@ const PieChartStatus = () => {
   let data = {};
 
   if (chartData.length != 0) {
-    chartData.map((data) => {
-      indata.push(data.jumlah);
-    });
+    for (let i in chartData[0]) {
+      indata.push(chartData[0][i]);
+    }
+
+    console.log(indata);
 
     data = {
-      labels: ["Aktif", "Cuti"],
+      labels: ["Cuti", "Aktif"],
       datasets: [
         {
           label: "# of Students",
           data: indata,
-          backgroundColor: ["rgb(66,133,244)", "rgb(234,67,53)"],
+          backgroundColor: ["rgb(234,67,53)", "rgb(66,133,244)"],
         },
       ],
     };
