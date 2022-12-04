@@ -70,14 +70,14 @@ const ListKHS = () => {
             <div id={ariacontrols} className="" aria-labelledby={h2id}>
               <div className="flex py-5 font-light border-b border-gray-200">
                 <div className="w-full">
-                  <div className="sem-group flex mb-2">
+                  {/* <div className="sem-group flex mb-2">
                     <p className="grid place-items-center flex-initial w-2/6 justify-start">
                       Status Mahasiswa
                     </p>
                     <div className="border border-grey-100 w-36 pl-3 py-1 align-left">
                       AKTIF
                     </div>
-                  </div>
+                  </div> */}
 
                   <div className="sem-group flex mb-2">
                     <p className="grid place-items-center flex-initial w-2/6 justify-start">
