@@ -100,7 +100,7 @@ const FormAddKHS = () => {
               id="smt_khs"
               className="p-1.5 htmlForm-control border border-solid border-gray-300 rounded focus:border-gray-500 focus:outline-none"
             >
-              <option>--Pilih Semester--</option>
+              <option value="">--Pilih Semester--</option>
               {li_angkatan.map((opt) => (
                 <option value={opt}>{opt}</option>
               ))}

@@ -113,7 +113,7 @@ const FormAddPKL = () => {
                   id="status"
                   className="p-1.5 form-control border border-solid border-gray-300 rounded focus:border-gray-500 focus:outline-none"
                 >
-                  <option>Pilih Status Mahasiswa</option>
+                  <option value="">Pilih Status Mahasiswa</option>
                   <option value="1" selected={"1" === status_mhs}>
                     AKTIF
                   </option>
@@ -138,7 +138,7 @@ const FormAddPKL = () => {
                   id="status_pkl"
                   className="p-1.5 form-control border border-solid border-gray-300 rounded focus:border-gray-500 focus:outline-none"
                 >
-                  <option>Pilih Status PKL</option>
+                  <option value="">Pilih Status PKL</option>
                   <option value="1">Lulus</option>
                   <option value="0">Tidak Lulus</option>
                 </select>
@@ -162,7 +162,7 @@ const FormAddPKL = () => {
                     id="nilai_pkl"
                     className="p-1.5 form-control border border-solid border-gray-300 rounded focus:border-gray-500 focus:outline-none"
                   >
-                    <option>Pilih Nilai PKL</option>
+                    <option value="">Pilih Nilai PKL</option>
                     <option value="A">A</option>
                     <option value="B">B</option>
                     <option value="C">C</option>
@@ -186,7 +186,7 @@ const FormAddPKL = () => {
                     id="smt_pkl"
                     className="p-1.5 form-control border border-solid border-gray-300 rounded focus:border-gray-500 focus:outline-none"
                   >
-                    <option>Pilih Semester</option>
+                    <option value="">Pilih Semester</option>
                     {sem.map((opt) => (
                       <option
                         value={opt}

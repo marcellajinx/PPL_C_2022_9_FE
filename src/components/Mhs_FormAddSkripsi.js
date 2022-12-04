@@ -123,7 +123,7 @@ const FormAddSkripsi = () => {
                   id="status"
                   className="p-1.5 form-control border border-solid border-gray-300 rounded focus:border-gray-500 focus:outline-none"
                 >
-                  <option>--Pilih Status Mahasiswa--</option>
+                  <option value="">--Pilih Status Mahasiswa--</option>
                   <option value="1">AKTIF</option>
                   <option value="0">NON-AKTIF</option>
                 </select>
@@ -144,7 +144,7 @@ const FormAddSkripsi = () => {
                   id="status_skripsi"
                   className="p-1.5 form-control border border-solid border-gray-300 rounded focus:border-gray-500 focus:outline-none"
                 >
-                  <option>--Pilih Status Skripsi--</option>
+                  <option value="">--Pilih Status Skripsi--</option>
                   <option value="1">Lulus</option>
                   <option value="0">Tidak Lulus</option>
                 </select>
@@ -165,7 +165,7 @@ const FormAddSkripsi = () => {
                   id="nilai_skripsi"
                   className="p-1.5 form-control border border-solid border-gray-300 rounded focus:border-gray-500 focus:outline-none"
                 >
-                  <option>--Pilih Nilai Skripsi--</option>
+                  <option value="">--Pilih Nilai Skripsi--</option>
                   <option value="A">A</option>
                   <option value="B">B</option>
                   <option value="C">C</option>

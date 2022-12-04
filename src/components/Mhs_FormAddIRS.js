@@ -85,7 +85,7 @@ const FormAddIRS = () => {
               htmlFor="smt_irs"
               className="form-label inline-block mb-2 text-gray-700"
             >
-              Semester Aktif
+              Semester
             </label>
             <select
               value={smt_irs}
@@ -96,7 +96,7 @@ const FormAddIRS = () => {
               id="smt_irs"
               className="p-1.5 form-control border border-solid border-gray-300 rounded focus:border-gray-500 focus:outline-none"
             >
-              <option>--Pilih Semester--</option>
+              <option value="">--Pilih Semester--</option>
               {li_angkatan.map((opt) => (
                 <option value={opt}>{opt}</option>
               ))}
